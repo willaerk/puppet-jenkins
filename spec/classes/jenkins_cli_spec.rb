@@ -14,7 +14,7 @@ describe 'jenkins', :type => :module do
       }}
       it { should create_class('jenkins::cli') }
       it { should contain_exec('jenkins-cli') }
-      it { should contain_exec('reload-jenkins').with_command(/http:\/\/localhost:9000/) }
+      it { should contain_exec('reload-jenkins').with_command(/http:\/\/127\.0\.0\.1:9000/) }
       it { should contain_exec('safe-restart-jenkins') }
       it { should contain_jenkins__sysconfig('HTTP_PORT').with_value('9000') }
     end

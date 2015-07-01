@@ -165,6 +165,7 @@ class jenkins(
   $port               = $jenkins::params::port,
   $libdir             = $jenkins::params::libdir,
   $executors          = undef,
+  $ssh_keyfile        = undef,
 ) inherits jenkins::params {
 
   validate_bool($lts, $install_java, $repo)

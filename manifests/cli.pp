@@ -28,9 +28,22 @@ class jenkins::cli {
 
   $port = jenkins_port()
 
-  # The jenkins cli command with required parameter(s)
-  $cmd = "java -jar ${jar} -s http://localhost:${port}"
+  if $jenkins::ssh_keyfile {
+    $auth_arg = "-i ${jenkins::ssh_keyfile}"
+  } else {
+    $auth_arg = undef
+  }
 
+  # The jenkins cli command with required parameter(s)
+  $cmd = join(
+    delete_undef_values([
+      "/usr/bin/java",
+      "-jar ${jar}",
+      $auth_arg,
+      "-s http://127.0.0.1:${port}",
+    ]),
+    ' '
+  )
   # Do a safe restart of Jenkins (only when notified)
   exec { 'safe-restart-jenkins':
     command     => "${cmd} safe-restart && /bin/sleep 10",
