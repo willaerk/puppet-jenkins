@@ -27,13 +27,6 @@ class jenkins::repo {
           Anchor['jenkins::repo::end']
       }
 
-      'Suse' : {
-        class { 'jenkins::repo::suse': }
-        Anchor['jenkins::repo::begin'] ->
-          Class['jenkins::repo::suse'] ->
-          Anchor['jenkins::repo::end']
-      }
-
       default: {
         fail( "Unsupported OS family: ${::osfamily}" )
       }
